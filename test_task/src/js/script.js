@@ -1,26 +1,38 @@
 let select = function () {
 	let indexPage = document.querySelector('.index-page');
-	let selectHeader = document.querySelectorAll('.select__header');
-	let selectItem = document.querySelectorAll('.select__item');
+	let select = document.getElementsByClassName('select');
+	let selectHeader = document.getElementsByClassName('select__header');
+	let selectItem = document.getElementsByClassName('select__item');
+	let fragment = document.createDocumentFragment();
+	let selectsBody = document.getElementsByClassName('select__body');
 
-	selectHeader.forEach(item => {
-		item.addEventListener('click', selectToggle)
-	});
+	for (let i = 1; i < 51; i++) {
 
-	selectItem.forEach(item => {
+		let selectItemHtml = document.createElement('div');
+		selectItemHtml.classList.toggle('select__item');
+		selectItemHtml.textContent = `${i}`;
+
+		fragment.appendChild(selectItemHtml);
+	};
+
+	for (let select of selectsBody) {
+		if (!select.hasChildNodes()) {
+			let clnFragment = fragment.cloneNode(true);
+			select.appendChild(clnFragment);
+		} else {
+			console.log('select clear');
+		}
+	};
+
+	for (let item of selectHeader) {
+		item.addEventListener('click', selectToggle);
+	};
+
+	for (let item of selectItem) {
 		item.addEventListener('click', selectChoose);
-	});
+	};
 
 	function selectToggle () {
-		
-		for (let i = 1; i < 50; i++) {
-
-			let selectBody = document.querySelectorAll('.select__body');
-			let selectItemHtml = `<div class="select__item">${i}</div>`;
-
-			selectBody.innerHTML = selectItemHtml;
-		};
-
 		this.parentElement.classList.toggle('is-active');
 	}
 
